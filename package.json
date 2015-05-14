@@ -2,12 +2,17 @@
   "name": "squat",
   "version": "0.1.0",
   "description": "simple quaternion library",
+  "keywords": ["quaternion", "math"],
   "main": "index.js",
   "scripts": {
     "test": "make test"
   },
-  "author": "oblong industries",
-  "license": "???",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oblong/squat.git"
+  },
+  "author": "Oblong Industries, Inc.",
+  "license": "MIT",
   "devDependencies": {
     "chai": "^2.3.0",
     "chai-stats": "^0.3.0",

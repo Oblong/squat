@@ -140,25 +140,19 @@ exports.zero = function (out) {
   return out;
 };
 
-function normalize_vect3(v) {
-  var x = v[0], y = v[1], z = v[2];
-  var mag = Math.sqrt(x*x + y*y + z*z);
-  return [x/mag, y/mag, z/mag];
-}
-
 /**
  * Constructs a rotation quaternion from an axis (a normalized
  * "vect3") and an angle (in radians).
  */
 exports.from_axis_angle = function (axis, angle, out) {
   out = out || new_quat();
-  var nax = normalize_vect3(axis);
-  var x = nax[0], y = nax[1], z = nax[2];
+  var x = axis[0], y = axis[1], z = axis[2];
+  var r = 1/Math.sqrt(x*x + y*y + z*z);
   var s = Math.sin(angle/2);
   out[0] = Math.cos(angle/2);
-  out[1] = s * x;
-  out[2] = s * y;
-  out[3] = s * z;
+  out[1] = s * x * r;
+  out[2] = s * y * r;
+  out[3] = s * z * r;
   return out;
 };
 
@@ -181,7 +175,15 @@ exports.angle = function (quat) {
  */
 exports.axis = function (quat) {
   var x = quat[1], y = quat[2], z = quat[3];
-  return normalize_vect3([x, y, z]);
+  var r = 1/Math.sqrt(x*x + y*y + z*z);
+  return [x*r, y*r, z*r];
+};
+
+/**
+ * Constructs a rotation quaternion from "norm" and "over" vectors.
+ */
+exports.from_norm_over = function (norm, over, out) {
+
 };
 
 /**

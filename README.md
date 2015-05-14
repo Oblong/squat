@@ -1,15 +1,15 @@
-# squat: the simple quaternion library
+# squat: simple quaternion library
 
 A simple quaternion library for JavaScript.
 
 ## API documentation
 
-`squat`'s API assumes quaternions are represented as an array of four
+squat's API assumes quaternions are represented as an array of four
 numbers.  Given such an array `q`, a quaternion is:
 
     q[0] + q[1]*i + q[2]*j + q[3]*k
 
-Functions which return a quaternion typically have an optional
+Functions that return a quaternion typically have an optional
 argument, at the end of the argument list, which serves as an "out"
 parameter.  If the caller passes an object (like an `Array`, or a
 `Float64Array`) via this argument, the function will set the `'0'`,

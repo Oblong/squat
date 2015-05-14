@@ -130,3 +130,30 @@ describe('normalized()', () => {
     assert.almostEqual(squat.length(u_p), 1);
   });
 });
+
+describe('from_axis_angle()', () => {
+  it('returns the right quaternion', () => {
+    assert.deepAlmostEqual(squat.from_axis_angle([1, 0, 0], 0), [1, 0, 0, 0]);
+    assert.deepAlmostEqual(squat.from_axis_angle([0, 1, 0], Math.PI), [0, 0, 1, 0]);
+    let a = Math.cos(Math.PI/4);
+    assert.deepAlmostEqual(squat.from_axis_angle([1, 0, 0], Math.PI/2), [a, a, 0, 0]);
+  });
+
+  it('does okay with a non-unit vector', () => {
+    assert.deepAlmostEqual(squat.from_axis_angle([2, 0, 0], 0), [1, 0, 0, 0]);
+  });
+});
+
+describe('axis() and angle()', () => {
+  it('do the right thing', () => {
+    // generative testing would be great here.
+    let rando_axis = [0.2672612419124244, 0.5345224838248488, 0.8017837257372732];
+    for (let axis of [[1, 0, 0], [0, 1, 0], [0, 0, 1], rando_axis]) {
+      for (let angle of [Math.PI, Math.PI/4, Math.PI/6]) {
+        let quat = squat.from_axis_angle(axis, angle);
+        assert.deepAlmostEqual(squat.axis(quat), axis);
+        assert.almostEqual(squat.angle(quat), angle);
+      }
+    }
+  });
+});

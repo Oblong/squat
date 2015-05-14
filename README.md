@@ -52,7 +52,7 @@ normalizing a zero quaternion is undefined.
 
 ### `squat.real(q)`
 
-Provides the real part of a quaternion.
+Provides the real part of a quaternion, as a number.
 
 ### `squat.vect(q)`
 
@@ -61,6 +61,21 @@ Provides the vector part of a quaternion, as a three-element array.
 ### `squat.zero([out])`
 
 Provides an empty quaternion, with all components set to zero.
+
+### `squat.from_axis_angle(axis, angle, [out])`
+
+Constructs a rotation quaternion, given an axis and angle.  The axis
+should be an array or array-like object holding three numbers.  The
+angle is in radians.
+
+### `squat.angle(q)`
+
+Extracts the angle part, in radians, from a rotation quaternion.
+
+### `squat.axis(q)`
+
+Extracts the axis part, as an array of three numbers, from a rotation
+quaternion.
 
 ## License
 

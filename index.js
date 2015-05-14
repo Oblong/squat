@@ -21,7 +21,7 @@
  * allocating space for return values.
  */
 
-var squat = module.exports;
+var squat = exports;
 
 // internal function that constructs and returns a new, zero
 // quaternion
@@ -138,6 +138,50 @@ exports.vect = function (q) { return [q[1], q[2], q[3]]; };
 exports.zero = function (out) {
   out = out || new_quat();
   return out;
+};
+
+function normalize_vect3(v) {
+  var x = v[0], y = v[1], z = v[2];
+  var mag = Math.sqrt(x*x + y*y + z*z);
+  return [x/mag, y/mag, z/mag];
+}
+
+/**
+ * Constructs a rotation quaternion from an axis (a normalized
+ * "vect3") and an angle (in radians).
+ */
+exports.from_axis_angle = function (axis, angle, out) {
+  out = out || new_quat();
+  var nax = normalize_vect3(axis);
+  var x = nax[0], y = nax[1], z = nax[2];
+  var s = Math.sin(angle/2);
+  out[0] = Math.cos(angle/2);
+  out[1] = s * x;
+  out[2] = s * y;
+  out[3] = s * z;
+  return out;
+};
+
+/**
+ * Extracts the angle part, in radians, of a rotation quaternion.
+ */
+exports.angle = function (quat) {
+  var a = quat[0];
+  if (a < -1.0 || a > 1.0)
+    return 0.0;
+  var angle = 2 * Math.acos(a);
+  if (angle > Math.PI)
+    return (angle - 2 * Math.PI);
+  return angle;
+};
+
+/**
+ * Extracts the axis part, as an array of three numbers, of a rotation
+ * quaternion.
+ */
+exports.axis = function (quat) {
+  var x = quat[1], y = quat[2], z = quat[3];
+  return normalize_vect3([x, y, z]);
 };
 
 /**
